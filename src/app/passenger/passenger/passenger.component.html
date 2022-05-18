@@ -1,0 +1,32 @@
+<div class="row">
+  <div [class]="!isSeatMapVisible ? 'content' : 'col-3'">
+    <mat-card class="passenger-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{passenger.fullName}}</mat-card-title>
+        <mat-card-subtitle>Check
+          In: {{passenger.allocatedSeat ? passenger.allocatedSeat : 'PENDING'}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="assets/profile.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          <mat-card-subtitle style="font-weight: bold">Preference: {{getPreference(passenger.preference)}}</mat-card-subtitle>
+          <mat-card-subtitle style="font-weight: bold">Lounge Access: {{passenger.ancillary?.lounge ? 'Yes' : 'No'}}</mat-card-subtitle>
+          <mat-card-subtitle style="font-weight: bold">Cabin Access: {{passenger.ancillary?.cabin ? 'Yes' : 'No'}}</mat-card-subtitle>
+          <mat-card-subtitle style="font-weight: bold">Special Meal: {{passenger.specialMeals === true ? 'Yes' : 'No'}}</mat-card-subtitle>
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+            <button mat-button *ngIf="!passenger.allocatedSeat" (click)="onCheckInRequest()">CHECK IN</button>
+            <button mat-button (click)="onAncillaryRequest()">Assign Ancillary</button>
+            <button mat-button (click)="onMealRequest()">Add Meal</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+<!--  <div class="col-4">-->
+<!--    asf-->
+<!--  </div>-->
+  <div class="col-9" *ngIf="isSeatMapVisible">
+    <app-flight [passengerId]="passenger.id"></app-flight>
+  </div>
+</div>

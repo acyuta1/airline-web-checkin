@@ -1,0 +1,25 @@
+<div class="confirmation-wrapper" style="position: relative">
+  <button class="btn-close-white" style="position: absolute; right: 10px;" (click)="close()">
+  </button>
+  <form [formGroup]="allocateSeatForm" (ngSubmit)="onAllocateSubmit()">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="passenger">Passenger: </label>
+          <select id="passenger" formControlName="passenger" class="form-control" style="margin-top: 6%">
+            <option disabled>Select Passenger</option>
+            <option *ngFor="let passenger of getPassengerByPreference((passengers | async).passengers)"
+                    [ngValue]="passenger">{{passenger.fullName}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12" style="margin-top: 5%">
+        <button mat-flat-button="primary" [disabled]="!allocateSeatForm.valid">Check In</button>
+        <button mat-flat-button="danger" (click)="close()">Cancel</button>
+      </div>
+
+    </div>
+  </form>
+</div>

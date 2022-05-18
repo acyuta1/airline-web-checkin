@@ -1,0 +1,12 @@
+<div class="cards">
+<div *ngFor="let description of descriptions" >
+  <mat-card class="example-card">
+    <img mat-card-image style="max-height: 200px" [src]='description.url'>
+    <mat-card-content>
+      <p>
+        {{description.title}}
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
+</div>

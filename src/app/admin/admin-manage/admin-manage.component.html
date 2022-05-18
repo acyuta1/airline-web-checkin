@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="content">
+    <mat-card class="passenger-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Add Passenger</mat-card-title>
+        <!--        <mat-card-subtitle>Check-->
+        <!--          In: {{passenger.allocatedSeat ? passenger.allocatedSeat : 'PENDING'}}</mat-card-subtitle>-->
+      </mat-card-header>
+      <img mat-card-image
+           src="https://www.flytap.com/-/media/Flytap/new-tap-pages/other-bookings/charter-flights/charter-flight-passengers-rtext-img-737x442.jpg?h=442&w=737&la=en-US&hash=11A81B3ECA791C1A93E04AC87F5C4A268CF77F29"
+           alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          <!--          <mat-card-subtitle style="font-weight: bold">Preference: {{getPreference(passenger.preference)}}</mat-card-subtitle>-->
+          <!--          <mat-card-subtitle style="font-weight: bold">Lounge Access: {{passenger.ancillary?.lounge ? 'Yes' : 'No'}}</mat-card-subtitle>-->
+          <!--          <mat-card-subtitle style="font-weight: bold">Cabin Access: {{passenger.ancillary?.cabin ? 'Yes' : 'No'}}</mat-card-subtitle>-->
+          <!--          <mat-card-subtitle style="font-weight: bold">Special Meal: {{passenger.specialMeals === true ? 'Yes' : 'No'}}</mat-card-subtitle>-->
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="showSeatAllocation()">Add</button>
+        <!--        <button mat-button (click)="onAncillaryRequest()">Assign Ancillary</button>-->
+        <!--        <button mat-button (click)="onMealRequest()">Add Meal</button>-->
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

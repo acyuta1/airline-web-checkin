@@ -1,0 +1,70 @@
+<div class="row" style="margin-top: 2%; margin-right: 2%; margin-left: 2%">
+  <div class="test-header">
+    <label>
+      <input
+        type="radio"
+        name="filter"
+        id="everyone"
+        (change)="externalFilterChanged('everyone')"
+      />
+      Everyone
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="filter"
+        id="wheelChair"
+        (change)="externalFilterChanged('wheelChair')"
+      />
+      Wheel-Chair
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="filter"
+        id="withInfant"
+        (change)="externalFilterChanged('withInfant')"
+      />
+      With-Infant
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="filter"
+        id="ancillary_lounge"
+        (change)="externalFilterChanged('ancillary_lounge')"
+      />
+      Lounge Access
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="filter"
+        id="ancillary_cabin"
+        (change)="externalFilterChanged('ancillary_cabin')"
+      />
+      Cabin Access
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="filter"
+        id="meal"
+        (change)="externalFilterChanged('meal')"
+      />
+      Special Meals
+    </label>
+  </div>
+  <ag-grid-angular
+    style="min-width: 20%; height: 670px;"
+    class="ag-theme-alpine"
+    [rowData]="(passengers | async).passengers"
+    [frameworkComponents]="frameworkComponents"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    (gridReady)="onGridReady($event)"
+    [isExternalFilterPresent]="isExternalFilterPresent"
+    [doesExternalFilterPass]="doesExternalFilterPass"
+  >
+  </ag-grid-angular>
+</div>

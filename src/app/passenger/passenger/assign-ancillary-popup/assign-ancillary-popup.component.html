@@ -1,0 +1,32 @@
+<div class="confirmation-wrapper" style="position: relative">
+  <button class="btn-close" style="position: absolute; right: 10px; top: 1px" (click)="close()">
+  </button>
+  <h1>Edit Ancillary</h1>
+  <form [formGroup]="editAncillaryForm" (ngSubmit)="onAncillaryEditSubmit()">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="form-group">
+          <div style="margin-bottom: 2%">
+            <label for="ancillaryLounge" style="margin-right: 2%">Lounge Access: </label>
+            <input id="ancillaryLounge" type="checkbox" formArrayName="ancillary" value="lounge"
+                   (change)="onCheckBoxChange($event)"
+            />
+          </div>
+          <div>
+            <label for="ancillaryCabin" style="margin-right: 2%">Cabin Access: </label>
+            <input id="ancillaryCabin" type="checkbox" formArrayName="ancillary" value="cabin"
+                   (change)="onCheckBoxChange($event)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12" style="margin-top: 5%">
+        <button mat-flat-button="primary" [disabled]="!editAncillaryForm.valid">Submit</button>
+        <button mat-flat-button="danger" (click)="close()">Cancel</button>
+      </div>
+
+    </div>
+  </form>
+</div>

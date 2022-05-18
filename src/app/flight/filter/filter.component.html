@@ -1,0 +1,55 @@
+<div class="row schedule">
+  <div class="col-md-12">
+    <form [formGroup]="searchFlightFormGroup" (ngSubmit)="onSearchFlightSubmit()" style="display: inherit">
+      <div class="row">
+        <div style="display: flex; justify-content: left;">
+          <div class="col-md-4" style="margin-right: 5%">
+            <div class="form-group" style="display:inline-block">
+              <mat-form-field>
+                <mat-label>From:</mat-label>
+                <mat-select formControlName="fromCity">
+                  <mat-option *ngFor="let fromCity of cities" [value]="fromCity.name">
+                    {{getFormattedCity(fromCity)}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group" style="display:inline-block">
+              <mat-form-field>
+                <mat-label>To:</mat-label>
+                <mat-select formControlName="toCity">
+                  <mat-option *ngFor="let toCity of cities" [value]="toCity.name">
+                    {{getFormattedCity(toCity)}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="selectedDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center">
+        <button mat-flat-button="primary" [disabled]="!searchFlightFormGroup.valid" style="margin-bottom: 2%">Search Flights</button>
+      </div>
+    </form>
+  </div>
+  <div style="text-align: center">
+    <p>
+      OR
+    </p>
+    <button mat-raised-button color="primary" (click)="onSearchFlightSubmitGeneric()">Fetch Today's Scheduled Flights</button>
+  </div>
+
+</div>

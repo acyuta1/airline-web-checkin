@@ -1,0 +1,26 @@
+<div class="row" style="margin-top: 2%; margin-right: 2%; margin-left: 2%">
+  <ag-grid-angular
+    style="min-width: 20%; height: 670px;"
+    class="ag-theme-alpine"
+    [rowData]="(seats | async).seats"
+    [frameworkComponents]="frameworkComponents"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    (gridReady)="onGridReady($event)"
+  >
+  </ag-grid-angular>
+
+  <h3 style="margin-top: 1%">Passenger Related Info: </h3>
+  <div><div class='box pink'></div> = Checked In + Special Meals </div>
+  <br>
+  <div><div class='box aqua'></div> = Checked In + Ancillary </div>
+  <br>
+  <div><div class='box yellow'></div> = Checked In </div>
+  <br>
+  <h3>Seat Info: </h3>
+  <div><div class='box orange'></div> = Seats Reserved for Passengers with Infants </div>
+  <br>
+  <div><div class='box lightblue'></div> = Wheel-Chair </div>
+  <br>
+</div>
+

@@ -1,0 +1,47 @@
+<form [formGroup]="addPassengerForm" (ngSubmit)="onPassengerAdd()">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>Add Passenger</h1>
+      <div class="form-group">
+        <div>
+          <label for="fullName">Full Name: </label>
+          <input
+            type="text"
+            id="fullName"
+            formControlName="fullName"
+            class="form-control"
+          >
+          <label for="preference" style="margin-top: 3%">Preference: </label>
+          <select id="preference" formControlName="preference" class="form-control">
+            <option disabled>Select Preference</option>
+            <option *ngFor="let preference of preferences" [value]="preference">{{preference}}</option>
+          </select>
+          <h3 style="margin-top:3%;">Select Ancillary</h3>
+          <div style="display: flex">
+            <div style="margin-bottom: 2%">
+              <label for="ancillaryLounge" style=" margin-right: 2%">Lounge Access: </label>
+              <input id="ancillaryLounge" type="checkbox" formArrayName="ancillary" value="lounge"
+                     (change)="onCheckBoxChange($event)"
+              />
+            </div>
+            <div>
+              <label for="ancillaryCabin" style="margin-right: 2%">Cabin Access: </label>
+              <input id="ancillaryCabin" type="checkbox" formArrayName="ancillary" value="cabin"
+                     (change)="onCheckBoxChange($event)"
+              />
+            </div>
+          </div>
+          <label for="specialMeal" style="margin-right: 2%">Special Meal: </label>
+          <input id="specialMeal" type="checkbox" [checked]="mealSelected" (change)="mealSelected = !mealSelected">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" style="margin-top: 5%">
+                <button mat-flat-button="primary" [disabled]="!addPassengerForm.valid">Add Passenger</button>
+                <button mat-flat-button="danger" (click)="close()">Cancel</button>
+    </div>
+
+  </div>
+</form>
