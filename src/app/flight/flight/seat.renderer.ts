@@ -6,7 +6,7 @@ import {AllocateSeatPopupComponent} from "../allocate-seat-popup/allocate-seat-p
 import {Store} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
 import {CheckInPassenger, CheckOutPassenger} from "../../passenger/store/passenger.actions";
-import {CheckInSeat, CheckOutSeat} from "./store/seats.actions";
+import {CheckInSeat, CheckOutSeat} from "../flight-list/store/seats.actions";
 import {padStartWidthZeros} from "ag-grid-community/dist/lib/utils/number";
 import {Passenger} from "../../shared/models/Passenger";
 import {HttpClient} from "@angular/common/http";

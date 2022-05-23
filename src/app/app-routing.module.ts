@@ -8,6 +8,9 @@ import {PassengerComponent} from "./passenger/passenger/passenger.component";
 import {AuthGuard} from "./auth/auth.guard";
 import {AuthComponent} from "./auth/auth/auth.component";
 import {AdminManageComponent} from "./admin/admin-manage/admin-manage.component";
+import {DashboardComponent} from "./layout/dashboard/dashboard.component";
+import {FlightServicesComponent} from "./flight/flight-services/flight-services.component";
+import {InFlightServicesComponent} from "./flight/in-flight-services/in-flight-services.component";
 
 const routes: Routes = [
 
@@ -27,13 +30,32 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: "dashboard",
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: "flights",
     canActivate: [AuthGuard],
     children: [
       {
         path: ':flightId',
-        component: FlightComponent,
-        pathMatch: 'full'
+        children: [
+          {
+            path: '',
+            component: FlightComponent,
+          },
+          {
+            path: 'services',
+            component: FlightServicesComponent,
+            pathMatch: 'full'
+          },
+          {
+            path: 'in-flight-services',
+            component: InFlightServicesComponent,
+            pathMatch: 'full'
+          }
+        ]
       },
       {
         path: "", component: FlightListComponent, pathMatch: 'full'

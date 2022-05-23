@@ -4,43 +4,56 @@
       <h1>Add Passenger</h1>
       <div class="form-group">
         <div>
-          <label for="fullName">Full Name: </label>
-          <input
-            type="text"
-            id="fullName"
-            formControlName="fullName"
-            class="form-control"
-          >
-          <label for="preference" style="margin-top: 3%">Preference: </label>
-          <select id="preference" formControlName="preference" class="form-control">
-            <option disabled>Select Preference</option>
-            <option *ngFor="let preference of preferences" [value]="preference">{{preference}}</option>
-          </select>
-          <h3 style="margin-top:3%;">Select Ancillary</h3>
-          <div style="display: flex">
-            <div style="margin-bottom: 2%">
-              <label for="ancillaryLounge" style=" margin-right: 2%">Lounge Access: </label>
-              <input id="ancillaryLounge" type="checkbox" formArrayName="ancillary" value="lounge"
-                     (change)="onCheckBoxChange($event)"
-              />
-            </div>
-            <div>
-              <label for="ancillaryCabin" style="margin-right: 2%">Cabin Access: </label>
-              <input id="ancillaryCabin" type="checkbox" formArrayName="ancillary" value="cabin"
-                     (change)="onCheckBoxChange($event)"
-              />
-            </div>
-          </div>
-          <label for="specialMeal" style="margin-right: 2%">Special Meal: </label>
-          <input id="specialMeal" type="checkbox" [checked]="mealSelected" (change)="mealSelected = !mealSelected">
+
+          <mat-form-field appearance="fill">
+            <mat-label>Full Name</mat-label>
+            <input type="text" matInput formControlName="fullName"
+                   placeholder="James Bond 007">
+            <mat-hint>Please Enter your full name</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="selectedDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>ID Proof (Aadhar)</mat-label>
+            <input type="text" matInput formControlName="aadhar"
+                   placeholder="">
+            <mat-hint>Please Enter your Aadhar Card Number</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Preference</mat-label>
+            <mat-select formControlName="preference">
+              <mat-option *ngFor="let preference of preferences" [value]="preference">
+                {{preference}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <ng-template matStepLabel>Select In-Flight/Ancillary Services</ng-template>
+          <mat-label>Services Offered:</mat-label>
+          <p>
+            <mat-checkbox formControlName="ancillaryLounge">Lounge Access</mat-checkbox>
+          </p>
+          <p>
+            <mat-checkbox formControlName="ancillaryCabin">Cabin Access</mat-checkbox>
+          </p>
+          <p>
+            <mat-checkbox formControlName="specialMeal">Special Meals</mat-checkbox>
+          </p>
         </div>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12" style="margin-top: 5%">
-                <button mat-flat-button="primary" [disabled]="!addPassengerForm.valid">Add Passenger</button>
-                <button mat-flat-button="danger" (click)="close()">Cancel</button>
+      <button mat-flat-button="primary" [disabled]="!addPassengerForm.valid">Add Passenger</button>
+      <button mat-flat-button="danger" (click)="close()">Cancel</button>
     </div>
 
   </div>

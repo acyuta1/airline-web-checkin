@@ -9,6 +9,8 @@ import * as fromApp from "../../store/app.reducer";
 import {SuccessComponent} from "../../shared/popup/success/success.component";
 import {HttpClient} from "@angular/common/http";
 import {Seat} from "../../shared/models/Seat";
+import * as random_date from "random-date-generator";
+import * as custom_id from "custom-id";
 
 @Injectable({
   providedIn: 'root'
@@ -65,10 +67,17 @@ export class PassengerService {
     let passengers: Passenger[] = [];
     seats.forEach(i => {
       if (i.allocationSummary) {
-        let existingPassenger = i[i.allocationSummary.seatAlpha[0]]?.allocatedPassenger;
-        if (existingPassenger) {
-          passengers.push(new Passenger(existingPassenger.id, existingPassenger.fullName, existingPassenger.preference, `${i.flightId}//${i.allocationSummary.seatAlpha}`, existingPassenger.ancillary, existingPassenger.specialMeals))
-        }
+        let allocationSummaryList = i.allocationSummary.seatAlpha.split("_");
+        console.log("allocationSummaryList", allocationSummaryList)
+        allocationSummaryList.forEach(alloS => {
+          let existingPassenger = i[alloS[0]]?.allocatedPassenger;
+          if (existingPassenger) {
+            let startDate = new Date(1990, 1, 1);
+            let endDate = new Date(2021, 12, 31);
+
+            passengers.push(new Passenger(existingPassenger.id, existingPassenger.fullName, random_date.getRandomDateInRange(startDate, endDate),custom_id({}), existingPassenger.preference, `${i.flightId}//${alloS}`, existingPassenger.ancillary, existingPassenger.specialMeals))
+          }
+        })
       }
     })
 

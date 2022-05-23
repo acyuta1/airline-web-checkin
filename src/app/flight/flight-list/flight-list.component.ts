@@ -4,6 +4,9 @@ import {FlightListService} from "./flight-list.service";
 import {ColDef, ColumnApi, GridApi, GridReadyEvent} from "ag-grid-community";
 import {ButtonCellRendererComponent} from "../../shared/ag-grid/button-cell-renderer/button-cell-renderer.component";
 import {Router} from "@angular/router";
+import {Store} from "@ngrx/store";
+import * as fromApp from "../../store/app.reducer";
+import {SetFlight} from "../flight/store/flight.actions";
 
 @Component({
   selector: 'app-flight-list',
@@ -44,7 +47,7 @@ export class FlightListComponent implements OnInit {
 
   frameworkComponents;
 
-  constructor(private flightListService: FlightListService, private router: Router) {
+  constructor(private flightListService: FlightListService, private router: Router, private store: Store<fromApp.AppState>) {
     this.frameworkComponents = {
       btnCellRenderer: ButtonCellRendererComponent,
     };
@@ -56,14 +59,17 @@ export class FlightListComponent implements OnInit {
         this.flightListService.generateFlights(flight);
       })
 
+    this.flightListService.generateFlightsGeneric();
+
     this.flightListService.flightsAdded
-      .subscribe((flightList) => {
-        this.flights = flightList;
+      .subscribe((flights: Flight[]) => {
+        this.flights = flights;
       })
   }
 
   private onFlightSelect(flight) {
     localStorage.removeItem('passengerId');
-    this.router.navigate(['flights', flight.id], {queryParams: {flightName: flight.name}})
+    this.store.dispatch(new SetFlight({flight: flight}));
+    this.router.navigate(['dashboard'], {queryParams: {flightId: flight.id, flightName: flight.name}})
   }
 }

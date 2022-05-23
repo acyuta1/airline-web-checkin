@@ -2,9 +2,11 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Store} from "@ngrx/store";
 import * as fromApp from "../../../store/app.reducer";
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AddPassenger} from "../../../passenger/store/passenger.actions";
 import {Passenger, Preference} from "../../../shared/models/Passenger";
+import {checkIfPastDate} from "../../../flight/filter/filter.component";
+import * as custom_id from "custom-id";
 
 @Component({
   selector: 'app-add-passenger-popup',
@@ -15,22 +17,27 @@ export class AddPassengerPopupComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<any>,
               @Inject(MAT_DIALOG_DATA) public data,
-              private store: Store<fromApp.AppState>) {
+              private store: Store<fromApp.AppState>,
+              private _formBuilder: FormBuilder) {
   }
   mealSelected: boolean = false;
   addPassengerForm: FormGroup;
   preferences: string[] = ['wheelChair', 'regular', 'withInfant'];
   ngOnInit(): void {
-    this.addPassengerForm = new FormGroup({
-      'fullName': new FormControl('', [Validators.required]),
-      'ancillary':  new FormArray([]),
-      'preference': new FormControl('', [Validators.required]),
-      'specialMeal': new FormControl(false )
+    this.addPassengerForm = this._formBuilder.group({
+      'fullName': ['', Validators.required],
+      'aadhar': ['', Validators.required],
+      'selectedDate': ['', Validators.required],
+      preference: ['', Validators.required],
+      ancillaryLounge: false,
+      ancillaryCabin: false,
+      specialMeal: false,
     })
   }
 
   close() {
-    this.dialogRef.close({res: ''});
+    this.addPassengerForm.reset();
+    this.dialogRef.close();
   }
 
   onCheckBoxChange(event: any) {
@@ -51,7 +58,8 @@ export class AddPassengerPopupComponent implements OnInit {
 
   onPassengerAdd() {
     var preference = null;
-    switch (this.addPassengerForm.get('preference').value) {
+    console.log(this.addPassengerForm);
+    switch (this.addPassengerForm.value.preference) {
       case 'wheelChair':
         preference = Preference.WHEELCHAIR;
         break;
@@ -61,10 +69,14 @@ export class AddPassengerPopupComponent implements OnInit {
       default:
         preference = Preference.NORMAL;
     }
-    let ancillaryValues: string[] = this.addPassengerForm.get('ancillary').value;
-    var passenger =
-      new Passenger(null, this.addPassengerForm.get('fullName').value, preference, null, {lounge: ancillaryValues.includes('lounge'), cabin: ancillaryValues.includes('cabin')}, this.mealSelected)
-    this.store.dispatch(new AddPassenger({passenger: passenger}))
+    if (this.addPassengerForm.get('fullName').value) {
+      var passenger =
+        new Passenger(null, this.addPassengerForm.get('fullName').value, this.addPassengerForm.value.selectedDate, this.addPassengerForm.value.aadhar ,preference, null, {
+          lounge: this.addPassengerForm.value.ancillaryLounge,
+          cabin: this.addPassengerForm.value.ancillaryCabin
+        }, this.addPassengerForm.value.specialMeal)
+      this.store.dispatch(new AddPassenger({passenger: passenger}))
+    }
 
     this.dialogRef.close({
     });

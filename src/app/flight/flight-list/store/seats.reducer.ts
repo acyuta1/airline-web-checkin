@@ -70,12 +70,23 @@ function setSeat(seatId: string, state: State, seatNumber: string, passenger: Pa
     if (!isAllocated) {
       seat.allocated = true;
       seat.allocatedTo = passenger.id;
-      updatedSeat.allocationSummary = {seatAlpha: seat.num}
+      let seatAlpha = "";
+      if (updatedSeat.allocationSummary?.seatAlpha) {
+        seatAlpha = updatedSeat.allocationSummary.seatAlpha + "_" + seat.num;
+      } else {
+        seatAlpha = seat.num;
+      }
+      updatedSeat.allocationSummary = {seatAlpha: seatAlpha}
       seat.allocatedPassenger = passenger;
     } else {
       seat.allocated = null;
       seat.allocatedTo = null;
-      updatedSeat.allocationSummary = null;
+
+      let seatAlpha = updatedSeat.allocationSummary.seatAlpha;
+      console.log("This is a test", seatId, seat)
+      seatAlpha = seatAlpha.split("_")
+        .filter(s => s !== seat.num).join("_")
+      updatedSeat.allocationSummary = seatAlpha ? {seatAlpha: seatAlpha} : null;
       seat.allocatedPassenger = null;
     }
     updatedSeat[seatId] = seat;

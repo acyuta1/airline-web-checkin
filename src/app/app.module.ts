@@ -22,8 +22,10 @@ import {MatButtonModule} from "@angular/material/button";
 import {SuccessComponent} from './shared/popup/success/success.component';
 import {AdminModule} from "./admin/admin.module";
 import {EffectsModule} from "@ngrx/effects";
-import {SeatsEffects} from "./flight/flight/store/seats.effects";
+import {SeatsEffects} from "./flight/flight-list/store/seats.effects";
 import {PassengerEffects} from "./passenger/store/passenger.effects";
+import {FlightEffects} from "./flight/flight/store/flight.effects";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -45,10 +47,11 @@ import {PassengerEffects} from "./passenger/store/passenger.effects";
     NgbModule,
     AgGridModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([SeatsEffects, PassengerEffects]),
+    EffectsModule.forRoot([SeatsEffects, PassengerEffects, FlightEffects]),
     LayoutModule,
     PassengerModule,
-    MatButtonModule
+    MatButtonModule,
+    CommonModule
   ],
   bootstrap: [AppComponent]
 })

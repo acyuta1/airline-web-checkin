@@ -5,11 +5,13 @@ import {DateTime} from 'luxon';
 import {adjectives, colors, uniqueNamesGenerator} from "unique-names-generator";
 import {CITIES} from "../../app,constants";
 import * as moment from "moment";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
 
 @Injectable({providedIn: "root"})
 export class FlightListService {
 
-  public constructor() {
+  public constructor(private http: HttpClient) {
   }
 
   fetchFlights = new Subject<any>();
@@ -34,11 +36,48 @@ export class FlightListService {
   }
 
   generateFlightsGeneric() {
-    let flights = this.flightGenerate({fromCity: null, toCity: null, selectedDate: null, all: true});
-    this.flightsAdded.next(flights);
+
+    return this.flightGenerate({fromCity: null, toCity: null, selectedDate: null, all: true});
   }
 
   private flightGenerate(filter: { fromCity: string, toCity: string, selectedDate: any, all: boolean }): Flight[] {
+
+    let fetchedFlights: Flight[] = [];
+    this.http.get(`${environment.firebaseDb}/flights/flight-list.json`)
+      .subscribe((res) => {
+        if ((filter === null || filter.fromCity === null) && res && Object.keys(res).length > 0) {
+          const id = Object.keys(res)[0];
+          fetchedFlights = res[id]["flightList"]
+          this.flightsAdded.next(fetchedFlights);
+        } else if (filter?.fromCity) {
+          fetchedFlights = this.initializeFlights(filter);
+          this.flightsAdded.next(fetchedFlights)
+        } else {
+          fetchedFlights = this.initializeFlights(filter);
+          this.flightsAdded.next(fetchedFlights)
+        }
+
+        return fetchedFlights;
+      });
+    return fetchedFlights;
+
+  }
+
+  private randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
+  private getCities() {
+    const randomFromCity = this.randomIntFromInterval(0, 9)
+    var randomToCity = this.randomIntFromInterval(0, 9)
+    while (randomFromCity === randomToCity) {
+      randomToCity = this.randomIntFromInterval(0, 9);
+    }
+
+    return {fromCity: CITIES[randomFromCity].name, toCity: CITIES[randomToCity].name}
+  }
+
+  private initializeFlights(filter: { fromCity: string, toCity: string, selectedDate: any, all: boolean }) {
     var flights: Flight[] = [];
     let timeDiff = 10;
     let noCities = 5;
@@ -69,20 +108,9 @@ export class FlightListService {
 
       timeDiff += 10;
     }
+
+    this.http.post(`${environment.firebaseDb}/flights/flight-list.json`, {flightList: flights})
+      .subscribe((res) => console.log(res));
     return flights;
-  }
-
-  private randomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min)
-  }
-
-  private getCities() {
-    const randomFromCity = this.randomIntFromInterval(0, 9)
-    var randomToCity = this.randomIntFromInterval(0, 9)
-    while (randomFromCity === randomToCity) {
-      randomToCity = this.randomIntFromInterval(0, 9);
-    }
-
-    return {fromCity: CITIES[randomFromCity].name, toCity: CITIES[randomToCity].name}
   }
 }

@@ -1,6 +1,8 @@
 import {Passenger, Preference} from "../../shared/models/Passenger";
 import * as PassengerActions from "./passenger.actions";
 import * as random_name from "node-random-name";
+import * as random_date from "random-date-generator";
+import * as custom_id from "custom-id";
 
 export interface State {
   passengers: Passenger[];
@@ -102,7 +104,6 @@ export function passengerListReducer(state = initialState, action: PassengerActi
       let newPassenger = {...action.payload.passenger, id: id};
       passengers.push(newPassenger);
 
-      console.log(passengers);
       return {
         ...state,
         passengers: passengers
@@ -127,7 +128,6 @@ export function passengerListReducer(state = initialState, action: PassengerActi
         })
       })
 
-      console.log(passengers);
 
       return {
         ...state,
@@ -151,7 +151,10 @@ function getPassengers(): Passenger[] {
     if (i % 7 === 0) {
       ancillary = {lounge: true, cabin: true};
     }
-    passengers.push(new Passenger(i, random_name({random: Math.random}), preference, null, ancillary));
+    let startDate = new Date(1990, 1, 1);
+    let endDate = new Date(2021, 12, 31);
+
+    passengers.push(new Passenger(i, random_name({random: Math.random}), random_date.getRandomDateInRange(startDate, endDate) , custom_id({}) ,preference, null, ancillary));
   }
   return passengers;
 }

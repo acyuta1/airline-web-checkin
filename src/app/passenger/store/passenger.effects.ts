@@ -8,7 +8,7 @@ import * as fromApp from "../../store/app.reducer";
 import {environment} from "../../../environments/environment";
 import {Seat} from "../../shared/models/Seat";
 import {Passenger} from "../../shared/models/Passenger";
-import {UpdateSeat} from "../../flight/flight/store/seats.actions";
+import {UpdateSeat} from "../../flight/flight-list/store/seats.actions";
 
 @Injectable()
 export class PassengerEffects {
@@ -91,20 +91,4 @@ export class PassengerEffects {
         return new Promise(() => console.log());
       })
     );
-
-  // @Effect({dispatch: false})
-  // checkoutSeat = this.actions$.pipe(ofType(SeatActions.CHECK_OUT_SEAT),
-  //   withLatestFrom(this.store.select('seats')),
-  //   switchMap(([actionData, seatsState]) => {
-  //     let seatNum: string = actionData['payload']['seatNumber'];
-  //     let seatNumStr = seatNum.charAt(1);
-  //     let seat = seatsState.seats.find(s => s.seatNo == Number.parseInt(seatNumStr));
-  //     let idToken;
-  //     this.store.select('auth')
-  //       .subscribe(auth => idToken = auth.user.token);
-  //     return this.http.put(`${environment.firebaseDb}/flights/${seat.flightId}/seats/${seat.seatsId}/${seat.seatNo - 1}.json`,
-  //       seat);
-  //   })
-  // );
-
 }

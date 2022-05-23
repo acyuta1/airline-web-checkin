@@ -97,10 +97,10 @@ export class FlightComponent implements OnInit {
     if (!this.flightId) {
       this.flightId = 1;
     }
-    this.seatsId = this.flightService.commitSeatsToDB(this.flightId, this.idToken);
+    // this.seatsId = this.flightService.commitSeatsToDB(this.flightId);
     this.seats = this.store.select('seats');
 
-    this.store.select('seats').subscribe((s) => this.passengerService.passengerSync(s.seats))
+    // this.store.select('seats').subscribe((s) => this.passengerService.passengerSync(s.seats))
   }
 
   public defaultColDef: ColDef = {

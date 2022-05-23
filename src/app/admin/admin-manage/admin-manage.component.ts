@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AllocateSeatPopupComponent} from "../../flight/allocate-seat-popup/allocate-seat-popup.component";
 import {CheckInPassenger} from "../../passenger/store/passenger.actions";
-import {CheckInSeat} from "../../flight/flight/store/seats.actions";
+import {CheckInSeat} from "../../flight/flight-list/store/seats.actions";
 import {MatDialog} from "@angular/material/dialog";
 import {AddPassengerPopupComponent} from "./add-passenger-popup/add-passenger-popup.component";
 

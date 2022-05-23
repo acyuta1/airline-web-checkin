@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Store} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
 import {Seat} from "../../shared/models/Seat";
-import {SetSeats} from "./store/seats.actions";
+import {SetSeats} from "../flight-list/store/seats.actions";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class FlightService {
 
   constructor(private http: HttpClient, private store: Store<fromApp.AppState>) { }
 
-  commitSeatsToDB(flightId: number, idToken: string): string {
+  commitSeatsToDB(flightId: number): string {
     let id: string;
     this.http.get(`${environment.firebaseDb}/flights/${flightId}/seats.json`) // attach seats.json?auth=${idToken}
       .subscribe((res: Seat[]) => {

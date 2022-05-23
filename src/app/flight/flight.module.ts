@@ -7,7 +7,7 @@ import {FlightListComponent} from "./flight-list/flight-list.component";
 import {FilterComponent} from "./filter/filter.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatSelectModule} from "@angular/material/select";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatInputModule} from "@angular/material/input";
@@ -19,6 +19,11 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatIconModule} from "@angular/material/icon";
 import {AllocateSeatPopupComponent} from "./allocate-seat-popup/allocate-seat-popup.component";
 import {MatDividerModule} from "@angular/material/divider";
+import { FlightServicesComponent } from './flight-services/flight-services.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import { InFlightServicesComponent } from './in-flight-services/in-flight-services.component';
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 
@@ -28,7 +33,9 @@ import {MatDividerModule} from "@angular/material/divider";
     SeatRenderer,
     FlightListComponent,
     FilterComponent,
-    AllocateSeatPopupComponent
+    AllocateSeatPopupComponent,
+    FlightServicesComponent,
+    InFlightServicesComponent
   ],
     exports: [
         FlightListComponent,
@@ -52,7 +59,11 @@ import {MatDividerModule} from "@angular/material/divider";
     MatDatepickerModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSlideToggleModule,
+    FormsModule,
+    MatStepperModule,
+    MatCheckboxModule,
   ]
 })
 export class FlightModule { }

@@ -25,6 +25,8 @@ export class FilterComponent implements OnInit {
       'selectedDate': new FormControl('', [Validators.required, checkIfPastDate]),
     })
 
+    this.onSearchFlightSubmitGeneric();
+
     this.cities = CITIES
   }
 
@@ -54,7 +56,7 @@ export class FilterComponent implements OnInit {
   }
 
   onSearchFlightSubmitGeneric() {
-    this.flightListService.generateFlightsGeneric();
+    this.flightListService.flightsAdded.next(this.flightListService.generateFlightsGeneric());
   }
 }
 
@@ -67,6 +69,5 @@ export function checkIfSameCitySelected (c: AbstractControl) {
 
 export function checkIfPastDate(c: AbstractControl) {
   const selectedDate = moment(c.parent?.get('selectedDate')?.value);
-  console.log(selectedDate)
   return selectedDate.isBefore(moment().subtract({d: 1})) ? { pastDateSelected : true }: null;
 }

@@ -7,6 +7,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import { AddPassengerPopupComponent } from './admin-manage/add-passenger-popup/add-passenger-popup.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatSelectModule} from "@angular/material/select";
 
 
 
@@ -22,7 +26,11 @@ import { AddPassengerPopupComponent } from './admin-manage/add-passenger-popup/a
     ReactiveFormsModule,
     FormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDatepickerModule,
+    MatCheckboxModule,
+    MatStepperModule,
+    MatSelectModule
   ]
 })
 export class AdminModule { }

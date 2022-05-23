@@ -6,6 +6,7 @@ import {Store} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
 import {ButtonCellRendererComponent} from "../../shared/ag-grid/button-cell-renderer/button-cell-renderer.component";
 import {Router} from "@angular/router";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-passenger-list',
@@ -34,6 +35,13 @@ export class PassengerListComponent implements OnInit {
   columnDefs: ColDef[] = [
     {
       field: 'fullName',
+    },
+    {
+      field: 'DoB',
+      valueFormatter: dateOfBirthFormatter,
+    },
+    {
+      field: 'aadharNumber',
     },
     {
       field: 'preference',
@@ -130,4 +138,8 @@ function preferenceFormatter(params) {
 
 function specialMealFormatter(params) {
   return params.value === true ? 'Yes' : 'No';
+}
+
+function dateOfBirthFormatter(params){
+  return moment(params.value).format('l');
 }

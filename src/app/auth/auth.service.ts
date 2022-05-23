@@ -55,7 +55,6 @@ export class AuthService {
               console.log(res);
             })
         }
-        console.log(res)
       })
   }
 

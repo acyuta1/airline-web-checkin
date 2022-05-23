@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="content">
+    <mat-card *ngFor="let option of filteredOptions(options)" class="passenger-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{option.title}}</mat-card-title>
+      </mat-card-header>
+      <img mat-card-image
+           [src]="option.img"
+           alt="Photo of a Shiba Inu">
+      <mat-card-actions>
+        <button mat-button (click)="onSelect(option.value)">Click Here</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

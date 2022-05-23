@@ -5,6 +5,7 @@ export class Flight {
     public fromCity,
     public toCity,
     public date,
-    public time) {
+    public time,
+    public services: string[] = []) {
   }
 }
