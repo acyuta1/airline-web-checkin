@@ -14,3 +14,20 @@
   padding: 10px;
   border-radius: 5px;
 }
+
+.is-mandatory {
+  background-color: orange !important;;
+}
+
+.box {
+  float: left;
+  height: 20px;
+  width: 20px;
+  margin-bottom: 15px;
+  border: 1px solid black;
+  clear: both;
+}
+
+.orange {
+  background-color: orange;
+}

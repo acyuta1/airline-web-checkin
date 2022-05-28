@@ -24,6 +24,9 @@ export class FlightListComponent implements OnInit {
     {field: 'toCity'},
     {field: 'date'},
     {field: 'time'},
+    {field: 'services',
+    valueFormatter: servicesFormatter,
+    minWidth: 150},
     {
       field: 'Select Flight',
       cellRenderer: 'btnCellRenderer',
@@ -59,7 +62,7 @@ export class FlightListComponent implements OnInit {
         this.flightListService.generateFlights(flight);
       })
 
-    this.flightListService.generateFlightsGeneric();
+    // this.flightListService.generateFlightsGeneric();
 
     this.flightListService.flightsAdded
       .subscribe((flights: Flight[]) => {
@@ -72,4 +75,13 @@ export class FlightListComponent implements OnInit {
     this.store.dispatch(new SetFlight({flight: flight}));
     this.router.navigate(['dashboard'], {queryParams: {flightId: flight.id, flightName: flight.name}})
   }
+}
+
+function servicesFormatter(params) {
+  let finalServices = 'Yet To be Assigned';
+  if (params.value) {
+    let services: string[] = params.value.services;
+    return services.join(", ")
+  }
+  return 'Yet To be Assigned by Admin';
 }

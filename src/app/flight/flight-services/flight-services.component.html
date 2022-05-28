@@ -1,55 +1,88 @@
 <div class="row">
-  <div class="content">
-    <h1 style="margin-left: 2%; margin-top: 2%"> Flight Services </h1>
-    <mat-card class="service-card">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Lobby Access</mat-card-title>
-      </mat-card-header>
-      <mat-card-actions>
-        <mat-slide-toggle
-          class="example-margin"
-          [(ngModel)]="options.lobbyAccess"
-          [checked]="options.lobbyAccess"
-          (change)="onChange()">
-          Slide me!
-        </mat-slide-toggle>
-      </mat-card-actions>
-    </mat-card>
-
-    <mat-card class="service-card">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Cabin Access</mat-card-title>
-      </mat-card-header>
-      <mat-card-actions>
-        <mat-slide-toggle
-          class="example-margin"
-          [(ngModel)]="options.cabinAccess"
-          [checked]="options.cabinAccess"
-          (change)="onChange()">
-          Slide me!
-        </mat-slide-toggle>
-      </mat-card-actions>
-    </mat-card>
-
-    <mat-card class="service-card">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Special Meals Availability</mat-card-title>
-      </mat-card-header>
-      <mat-card-actions>
-        <mat-slide-toggle
-          class="example-margin"
-          [(ngModel)]="options.specialMeals"
-          [checked]="options.specialMeals"
-          (change)="onChange()">
-          Slide me!
-        </mat-slide-toggle>
-      </mat-card-actions>
-    </mat-card>
-    <button mat-button (click)="onSave()" style="margin-top: 2%; margin-left: 2%">Save</button>
-
+  <h1 style="margin-left: 2%; margin-top: 2%"> Flight Services </h1>
+  <div class="box-container">
+    <div class="col-lg-3 col-md-3 col-sm-12 box">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <mat-card class="content">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Lobby Access</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>Assign Lobby Access Service to Flight {{flight.name}}. This facility can later be assigned to
+          passengers by Flight specific staff.
+        </mat-card-content>
+        <mat-card-actions>
+          <mat-slide-toggle
+            class="example-margin"
+            [(ngModel)]="options.lobbyAccess"
+            [checked]="options.lobbyAccess"
+            (change)="onChange()">
+            Slide me!
+          </mat-slide-toggle>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
-
+  <div class="box-container">
+    <div class="col-lg-3 col-md-6 col-sm-12 box">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <mat-card class="content">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Cabin Access</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>Assign Cabin Access Service to Flight {{flight.name}}. This facility can later be assigned to
+          passengers by Flight specific staff.
+        </mat-card-content>
+        <mat-card-actions>
+          <mat-slide-toggle
+            class="example-margin"
+            [(ngModel)]="options.cabinAccess"
+            [checked]="options.cabinAccess"
+            (change)="onChange()">
+            Slide me!
+          </mat-slide-toggle>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  <div class="box-container">
+    <div class="col-lg-3 col-md-6 col-sm-12 box">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <mat-card class="content">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Special Meals Availability</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>Assign Special Meals to Flight {{flight.name}}. This facility can later be assigned to
+          passengers by Flight specific staff.
+        </mat-card-content>
+        <mat-card-actions>
+          <mat-slide-toggle
+            class="example-margin"
+            [(ngModel)]="options.specialMeals"
+            [checked]="options.specialMeals"
+            (change)="onChange()">
+            Slide me!
+          </mat-slide-toggle>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  <div style="text-align: center">
+    <button mat-button (click)="onSave()" style="margin-top: 2%; margin-left: 2%; background-color: lightblue">Save
+    </button>
+    <button mat-button (click)="redirectToDashboard()"
+            style="margin-top: 2%; margin-left: 2%; background-color: blanchedalmond">Back
+    </button>
+  </div>
 </div>

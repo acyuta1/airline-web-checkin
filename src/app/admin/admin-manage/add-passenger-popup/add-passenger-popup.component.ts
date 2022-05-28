@@ -7,6 +7,11 @@ import {AddPassenger} from "../../../passenger/store/passenger.actions";
 import {Passenger, Preference} from "../../../shared/models/Passenger";
 import {checkIfPastDate} from "../../../flight/filter/filter.component";
 import * as custom_id from "custom-id";
+import {
+  checkIfAadharIsValid,
+  checkIfFutureDate
+} from "../../../passenger/passenger/update-mandatory-fields-popup/update-mandatory-fields-popup.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-passenger-popup',
@@ -18,7 +23,8 @@ export class AddPassengerPopupComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<any>,
               @Inject(MAT_DIALOG_DATA) public data,
               private store: Store<fromApp.AppState>,
-              private _formBuilder: FormBuilder) {
+              private _formBuilder: FormBuilder,
+              private _snackBar: MatSnackBar) {
   }
   mealSelected: boolean = false;
   addPassengerForm: FormGroup;
@@ -26,8 +32,8 @@ export class AddPassengerPopupComponent implements OnInit {
   ngOnInit(): void {
     this.addPassengerForm = this._formBuilder.group({
       'fullName': ['', Validators.required],
-      'aadhar': ['', Validators.required],
-      'selectedDate': ['', Validators.required],
+      'aadhar': ['', [Validators.required, checkIfAadharIsValid]],
+      'selectedDate': ['', [Validators.required, checkIfFutureDate]],
       preference: ['', Validators.required],
       ancillaryLounge: false,
       ancillaryCabin: false,
@@ -76,9 +82,14 @@ export class AddPassengerPopupComponent implements OnInit {
           cabin: this.addPassengerForm.value.ancillaryCabin
         }, this.addPassengerForm.value.specialMeal)
       this.store.dispatch(new AddPassenger({passenger: passenger}))
+      this.openSnackBar(`Successfully Added a new passenger with name: ${passenger.fullName}`, 'close')
     }
 
     this.dialogRef.close({
     });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }

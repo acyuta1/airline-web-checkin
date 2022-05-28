@@ -16,10 +16,13 @@
           <mat-card-subtitle style="font-weight: bold">Special Meal: {{passenger.specialMeals === true ? 'Yes' : 'No'}}</mat-card-subtitle>
         </p>
       </mat-card-content>
+      <mat-error *ngIf="isMandatoryMissing()">MANDATORY INFO MISSING</mat-error>
+
       <mat-card-actions>
-            <button mat-button *ngIf="!passenger.allocatedSeat" (click)="onCheckInRequest()">CHECK IN</button>
-            <button mat-button (click)="onAncillaryRequest()">Assign Ancillary</button>
-            <button mat-button (click)="onMealRequest()">Add Meal</button>
+            <button mat-button *ngIf="isMandatoryMissing()" (click)="onMandatoryUpdate()">Update Mandatory Fields</button>
+            <button mat-button *ngIf="!passenger.allocatedSeat && !isMandatoryMissing()" (click)="onCheckInRequest()">CHECK IN</button>
+            <button mat-button *ngIf="!isMandatoryMissing()" (click)="onAncillaryRequest()">Assign Ancillary</button>
+            <button mat-button *ngIf="!isMandatoryMissing()" (click)="onMealRequest()">Add Meal</button>
       </mat-card-actions>
     </mat-card>
   </div>

@@ -1,8 +1,11 @@
-<div class="content">
+<div class="row">
+  <h1 style="margin-left: 2%; margin-top: 2%"> In Flight Services </h1>
+  <div class="col-lg-5 col-md-8 col-sm-12">
   <mat-stepper orientation="vertical" #stepper>
     <mat-step [stepControl]="selectPassengerGroup">
       <form [formGroup]="selectPassengerGroup">
         <ng-template matStepLabel>Select Checked-In Passenger</ng-template>
+        <p>Note: Only applicable if a passenger is checked-in already.</p>
         <mat-form-field appearance="fill">
           <mat-label>Passenger</mat-label>
           <mat-select formControlName="passenger">
@@ -12,26 +15,27 @@
           </mat-select>
         </mat-form-field>
         <div>
-          <button mat-button matStepperNext>Next</button>
+          <button mat-button matStepperNext [disabled]="!selectPassengerGroup.get('passenger').value">Next</button>
         </div>
       </form>
     </mat-step>
     <mat-step [stepControl]="assignAncillaryGroup">
       <form [formGroup]="assignAncillaryGroup">
         <ng-template matStepLabel>Select In-Flight/Ancillary Services</ng-template>
+        <p>Note: Every flight has specific Flight Services. If not available, contact admin to enable a service.</p>
         <mat-label>Services Offered:</mat-label>
         <p>
-          <mat-checkbox formControlName="ancillaryLounge">Lounge Access</mat-checkbox>
+          <mat-checkbox *ngIf="services.includes('lobbyAccess')" formControlName="ancillaryLounge">Lounge Access</mat-checkbox>
         </p>
         <p>
-          <mat-checkbox formControlName="ancillaryCabin">Cabin Access</mat-checkbox>
+          <mat-checkbox *ngIf="services.includes('cabinAccess')" formControlName="ancillaryCabin">Cabin Access</mat-checkbox>
         </p>
         <p>
-          <mat-checkbox formControlName="specialMeal">Special Meals</mat-checkbox>
+          <mat-checkbox *ngIf="services.includes('specialMeals')" formControlName="specialMeal">Special Meals</mat-checkbox>
         </p>
         <div>
           <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext (click)="onNext()">Next</button>
+          <button mat-button matStepperNext [disabled]="!selectPassengerGroup.get('passenger').value || checkIfSelected()" (click)="onNext()">Next</button>
         </div>
       </form>
     </mat-step>
@@ -44,4 +48,10 @@
       </div>
     </mat-step>
   </mat-stepper>
+  </div>
+  <div style="text-align: center">
+    <button mat-button (click)="redirectToDashboard()"
+            style="margin-top: 2%; margin-left: 2%; background-color: blanchedalmond">Back
+    </button>
+  </div>
 </div>

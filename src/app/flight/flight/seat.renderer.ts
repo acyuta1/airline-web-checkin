@@ -12,6 +12,7 @@ import {Passenger} from "../../shared/models/Passenger";
 import {HttpClient} from "@angular/common/http";
 import {Seat} from "../../shared/models/Seat";
 import {environment} from "../../../environments/environment";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'total-value-component',
@@ -44,7 +45,7 @@ export class SeatRenderer implements ICellRendererAngularComp {
   specialMeal: boolean;
   ancillary: boolean;
   isInfant: boolean;
-  public constructor(private dialog: MatDialog, private store: Store<fromApp.AppState>, private http: HttpClient) {
+  public constructor(private dialog: MatDialog, private store: Store<fromApp.AppState>, private http: HttpClient, private _snackBar: MatSnackBar) {
   }
 
   agInit(params: ICellRendererParams): void {
@@ -57,6 +58,7 @@ export class SeatRenderer implements ICellRendererAngularComp {
       this.store.select('passengers')
         .subscribe((state) => {
           let foundPassenger = state.passengers.find(passenger => passenger.id === this.allocatedTo.id);
+          console.log(foundPassenger)
           if(foundPassenger.specialMeals) {
             this.specialMeal = true;
           }
@@ -90,6 +92,7 @@ export class SeatRenderer implements ICellRendererAngularComp {
   checkOut() {
     this.store.dispatch(new CheckOutSeat({seatNumber: this.cellValue}));
     this.store.dispatch(new CheckOutPassenger({passengerId: this.allocatedTo.id}))
+    this.openSnackBar(`Passenger check In undo for seat ${this.cellValue} Successfull`, 'close');
   }
 
   getValueToDisplay(params: ICellRendererParams) {
@@ -123,8 +126,14 @@ export class SeatRenderer implements ICellRendererAngularComp {
             seatNumber: allocationDetails.seatNumber,
             passenger: allocationDetails.passenger
           }))
+
+          this.openSnackBar(`Passenger ${allocationDetails.passenger.fullName} checked In at ${allocationDetails.seatNumber}`, 'close');
         }
       }
     });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }

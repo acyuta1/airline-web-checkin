@@ -7,11 +7,12 @@ import {CITIES} from "../../app,constants";
 import * as moment from "moment";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
+import {AngularFireDatabase} from "@angular/fire/compat/database";
 
 @Injectable({providedIn: "root"})
 export class FlightListService {
 
-  public constructor(private http: HttpClient) {
+  public constructor(private http: HttpClient, private db: AngularFireDatabase) {
   }
 
   fetchFlights = new Subject<any>();
@@ -21,7 +22,23 @@ export class FlightListService {
   flightsAdded = new Subject<Flight[]>();
 
   onFetchFlights(flight: { fromCity: string, toCity: string, selectedDate: Date }) {
-    this.fetchFlights.next(flight);
+    let filteredFlights: Flight[] = [];
+      this.db.list('flights/flight-list')
+      .valueChanges()
+      .subscribe(list => {
+        filteredFlights = list[0]['flightList'].filter(l => {
+          return l.fromCity === flight.fromCity && l.toCity === flight.toCity
+        })
+        console.log(filteredFlights)
+        let clone = [ ...filteredFlights ];
+        clone = clone.map(f => {
+          f.date = moment(flight.selectedDate).format('l');
+          return f;
+        })
+        this.flightsAdded.next(clone);
+      })
+
+    return filteredFlights;
   }
 
 
@@ -41,8 +58,23 @@ export class FlightListService {
   }
 
   private flightGenerate(filter: { fromCity: string, toCity: string, selectedDate: any, all: boolean }): Flight[] {
-
+    console.log("called")
     let fetchedFlights: Flight[] = [];
+    // console.log(this.db.list('flights/flight-list').query.ref)
+    // // this.db.list('flights/flight-list').valueChanges()
+    // //   .subscribe((list: Flight[]) => {
+    // //     if (list.length === 0) {
+    // //       fetchedFlights = this.initializeFlights(filter);
+    // //       this.flightsAdded.next(fetchedFlights)
+    // //     } else if ((filter === null || filter.fromCity === null) && list.length > 0) {
+    // //       this.flightsAdded.next(list);
+    // //     } else if (filter?.fromCity) {
+    // //       fetchedFlights = this.initializeFlights(filter);
+    // //       this.flightsAdded.next(fetchedFlights)
+    // //     }
+    // //
+    // //     return fetchedFlights;
+    // //   })
     this.http.get(`${environment.firebaseDb}/flights/flight-list.json`)
       .subscribe((res) => {
         if ((filter === null || filter.fromCity === null) && res && Object.keys(res).length > 0) {
@@ -109,6 +141,8 @@ export class FlightListService {
       timeDiff += 10;
     }
 
+    // let flightList = this.db.list('flights/flight-list')
+    // flightList.push(flights);
     this.http.post(`${environment.firebaseDb}/flights/flight-list.json`, {flightList: flights})
       .subscribe((res) => console.log(res));
     return flights;

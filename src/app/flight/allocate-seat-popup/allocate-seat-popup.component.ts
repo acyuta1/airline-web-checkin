@@ -44,6 +44,7 @@ export class AllocateSeatPopupComponent implements OnInit {
   }
 
   getPassengerByPreference(passengers: Passenger[]) {
+    passengers = passengers.filter(i => i.DoB && i.aadharNumber)
     if (this.data.passengerId) {
       return passengers.filter(p => p.id === this.data.passengerId);
     }

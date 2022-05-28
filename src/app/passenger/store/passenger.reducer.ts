@@ -133,6 +133,22 @@ export function passengerListReducer(state = initialState, action: PassengerActi
         ...state,
         passengers: passengers
       }
+    case PassengerActions.UPDATE_MANDATORY:
+      var passengers = [...state.passengers];
+
+      var payloadPassenger = { ...passengers.find(p => p.id === action.payload.passenger.id) }
+
+      console.log(payloadPassenger)
+      passengers = passengers.map(p => {
+        if (p.id === action.payload.passenger.id) {
+          return action.payload.passenger;
+        } return p;
+      })
+
+      return {
+        ...state,
+        passengers: passengers
+      }
     default: {
       return state;
     }
@@ -153,8 +169,14 @@ function getPassengers(): Passenger[] {
     }
     let startDate = new Date(1990, 1, 1);
     let endDate = new Date(2021, 12, 31);
+    let passenger = new Passenger(i, random_name({random: Math.random}), random_date.getRandomDateInRange(startDate, endDate) , custom_id({randomLength: 3}) ,preference, null, ancillary);
 
-    passengers.push(new Passenger(i, random_name({random: Math.random}), random_date.getRandomDateInRange(startDate, endDate) , custom_id({}) ,preference, null, ancillary));
+    if (i%2===0 && i%3===0) {
+      passenger.DoB = null;
+    } else if(i%2===0 && i%5===0) {
+      passenger.aadharNumber = null;
+    }
+    passengers.push(passenger);
   }
   return passengers;
 }

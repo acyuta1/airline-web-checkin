@@ -5,6 +5,7 @@ import {City} from "../../shared/models/City";
 import {FlightListService} from "../flight-list/flight-list.service";
 import { CITIES } from "../../app,constants";
 import * as moment from "moment";
+import {AngularFireDatabase} from "@angular/fire/compat/database";
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
@@ -15,7 +16,7 @@ export class FilterComponent implements OnInit {
   searchFlightFormGroup: FormGroup;
   cities: City[];
 
-  constructor(private flightListService: FlightListService) {
+  constructor(private flightListService: FlightListService, private db: AngularFireDatabase) {
   }
 
   ngOnInit(): void {

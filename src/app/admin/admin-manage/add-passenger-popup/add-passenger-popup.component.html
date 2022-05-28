@@ -18,15 +18,16 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
+          <mat-error *ngIf="addPassengerForm.controls.selectedDate.errors?.futureDateSelected">Cannot be in the future</mat-error>
 
           <mat-form-field appearance="fill">
             <mat-label>ID Proof (Aadhar)</mat-label>
             <input type="text" matInput formControlName="aadhar"
                    placeholder="">
-            <mat-hint>Please Enter your Aadhar Card Number</mat-hint>
           </mat-form-field>
+          <mat-error *ngIf="addPassengerForm.controls.aadhar.errors?.incorrentAadharLength">Aadhar Length must be 12 digits</mat-error>
 
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" style="margin-top: 2%">
             <mat-label>Preference</mat-label>
             <mat-select formControlName="preference">
               <mat-option *ngFor="let preference of preferences" [value]="preference">

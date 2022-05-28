@@ -1,0 +1,39 @@
+<form [formGroup]="updatePassengerInfoForm" (ngSubmit)="onPassengerInfoUpdate()">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>Update Mandatory Missing Info of {{data.passenger.fullName}}</h1>
+      <div class="form-group">
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Full Name</mat-label>
+            <input type="text" matInput
+                   [value]="data.passenger.fullName" disabled>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="selectedDate" [disabled]="!isAadharPresent">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-error *ngIf="updatePassengerInfoForm.controls.selectedDate.errors?.futureDateSelected">Cannot be in the future</mat-error>
+
+          <mat-form-field appearance="fill">
+            <mat-label>ID Proof (Aadhar)</mat-label>
+            <input type="text" matInput formControlName="aadhar"
+                   [readonly]="isAadharPresent ? true : null">
+          </mat-form-field>
+          <mat-error *ngIf="updatePassengerInfoForm.controls.aadhar.errors?.incorrentAadharLength">Aadhar Length must be 12 digits</mat-error>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" style="margin-top: 5%">
+      <button mat-flat-button="primary" [disabled]="!updatePassengerInfoForm.valid">Update Mandatory Information</button>
+      <button mat-flat-button="danger" (click)="close()">Cancel</button>
+    </div>
+
+  </div>
+</form>

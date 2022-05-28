@@ -3,7 +3,7 @@ import {Subject} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {AddMeal, EditAncillary, ReplacePassengers} from "../store/passenger.actions";
 import {AssignAncillaryPopupComponent} from "./assign-ancillary-popup/assign-ancillary-popup.component";
-import {Passenger} from "../../shared/models/Passenger";
+import {Passenger, Preference} from "../../shared/models/Passenger";
 import {Store} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
 import {SuccessComponent} from "../../shared/popup/success/success.component";

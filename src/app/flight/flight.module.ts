@@ -24,6 +24,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { InFlightServicesComponent } from './in-flight-services/in-flight-services.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 
@@ -64,6 +65,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     FormsModule,
     MatStepperModule,
     MatCheckboxModule,
+    MatSnackBarModule
   ]
 })
 export class FlightModule { }

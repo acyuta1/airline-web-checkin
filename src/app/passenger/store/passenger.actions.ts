@@ -7,6 +7,7 @@ export const EDIT_ANCILLARY = 'EDIT_ANCILLARY';
 export const ADD_MEAL = 'ADD_MEAL';
 export const ADD_PASSENGER = 'ADD_PASSENGER';
 export const REPLACE_PASSENGERS = 'REPLACE_PASSENGERS';
+export const UPDATE_MANDATORY = 'UPDATE_MANDATORY';
 
 export class CheckInPassenger implements Action {
   public readonly type = CHECK_IN_PASSENGER;
@@ -44,4 +45,10 @@ export class ReplacePassengers implements Action {
   }
 }
 
-export type PassengerActions = CheckInPassenger | CheckOutPassenger | EditAncillary | AddMeal | AddPassenger | ReplacePassengers;
+export class UpdatePassenger implements Action {
+  public readonly type = UPDATE_MANDATORY;
+  constructor(public payload: {passenger: Passenger}) {
+  }
+}
+
+export type PassengerActions = CheckInPassenger | CheckOutPassenger | EditAncillary | AddMeal | AddPassenger | ReplacePassengers | UpdatePassenger;

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ColDef, ColumnApi, GridApi, GridReadyEvent, RowNode} from "ag-grid-community";
+import {ColDef, ColumnApi, GridApi, GridReadyEvent, RowClassRules, RowNode} from "ag-grid-community";
 import {Observable} from "rxjs";
 import {Passenger} from "../../shared/models/Passenger";
 import {Store} from "@ngrx/store";
@@ -7,6 +7,9 @@ import * as fromApp from "../../store/app.reducer";
 import {ButtonCellRendererComponent} from "../../shared/ag-grid/button-cell-renderer/button-cell-renderer.component";
 import {Router} from "@angular/router";
 import * as moment from "moment";
+import {AddPassengerPopupComponent} from "../../admin/admin-manage/add-passenger-popup/add-passenger-popup.component";
+import {MatDialog} from "@angular/material/dialog";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-passenger-list',
@@ -18,10 +21,11 @@ export class PassengerListComponent implements OnInit {
   private gridApi!: GridApi;
   private gridColumnApi!: ColumnApi;
   frameworkComponents;
+  dialogRef: any;
 
   passengers: Observable<{ passengers: Passenger[] }>;
 
-  constructor(private store: Store<fromApp.AppState>, private router: Router) {
+  constructor(private store: Store<fromApp.AppState>, private router: Router, private dialog: MatDialog, private location: Location) {
     this.frameworkComponents = {
       btnCellRenderer: ButtonCellRendererComponent,
     };
@@ -42,6 +46,7 @@ export class PassengerListComponent implements OnInit {
     },
     {
       field: 'aadharNumber',
+      valueFormatter: aadharValueFormnatter,
     },
     {
       field: 'preference',
@@ -78,6 +83,7 @@ export class PassengerListComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.gridApi.sizeColumnsToFit();
+
   }
 
   private onPassengerSelect(passenger) {
@@ -88,6 +94,10 @@ export class PassengerListComponent implements OnInit {
     preference = newValue;
     this.gridApi.onFilterChanged();
   }
+
+  public rowClassRules: RowClassRules = {
+    'is-mandatory': '!data.DoB || !data.aadharNumber',
+  };
 
   isExternalFilterPresent(): boolean {
     return preference !== 'everyone';
@@ -106,6 +116,10 @@ export class PassengerListComponent implements OnInit {
         default:
           return true;
       }
+    }
+    else if (preference === 'mandatoryFields') {
+      console.log(node.data)
+      return  !node.data.aadharNumber || !node.data.DoB;
     } else {
       switch (preference) {
         case 'wheelChair':
@@ -118,6 +132,23 @@ export class PassengerListComponent implements OnInit {
           return true;
       }
     }
+  }
+
+  onAddNewPassenger() {
+    this.dialogRef = this.dialog.open(AddPassengerPopupComponent, {
+      width: '445px',
+      data: {
+        header: 'Success',
+        onConfirm: () => this.dialog.closeAll()
+      },
+      disableClose: true
+    });
+    this.dialogRef.afterClosed().subscribe((result) => {
+    });
+  }
+
+  redirectToDashboard() {
+    this.location.back();
   }
 }
 var preference = 'everyone';
@@ -141,5 +172,9 @@ function specialMealFormatter(params) {
 }
 
 function dateOfBirthFormatter(params){
-  return moment(params.value).format('l');
+  return params.value ? moment(params.value).format('l') : 'MISSING';
+}
+
+function aadharValueFormnatter(params){
+  return params.value ? params.value : 'MISSING';
 }

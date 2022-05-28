@@ -9,6 +9,11 @@ import {FlightModule} from "../flight/flight.module";
 import { AssignAncillaryPopupComponent } from './passenger/assign-ancillary-popup/assign-ancillary-popup.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import { UpdateMandatoryFieldsPopupComponent } from './passenger/update-mandatory-fields-popup/update-mandatory-fields-popup.component';
+import {MatInputModule} from "@angular/material/input";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 
@@ -16,7 +21,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
   declarations: [
     PassengerListComponent,
     PassengerComponent,
-    AssignAncillaryPopupComponent
+    AssignAncillaryPopupComponent,
+    UpdateMandatoryFieldsPopupComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +32,11 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     FlightModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatSnackBarModule
   ]
 })
 export class PassengerModule { }

@@ -1,5 +1,7 @@
 <div class="row" style="margin-top: 2%; margin-right: 2%; margin-left: 2%">
+  <h1>Passenger List</h1>
   <div class="test-header">
+    Filters:
     <label>
       <input
         type="radio"
@@ -8,6 +10,15 @@
         (change)="externalFilterChanged('everyone')"
       />
       Everyone
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="filter"
+        id="mandatoryFields"
+        (change)="externalFilterChanged('mandatoryFields')"
+      />
+      Missing Mandatory Fields
     </label>
     <label>
       <input
@@ -65,6 +76,16 @@
     (gridReady)="onGridReady($event)"
     [isExternalFilterPresent]="isExternalFilterPresent"
     [doesExternalFilterPass]="doesExternalFilterPass"
+    [rowClassRules]="rowClassRules"
   >
   </ag-grid-angular>
+
+  <h3 style="margin-top: 1%">Note: </h3>
+  <div><div class='box orange'></div> = Missing Mandatory Info </div>
+  <br>
+
+  <div style="text-align: center; margin-top: 2%">
+    <button mat-button (click)="onAddNewPassenger()" style="background-color: lightblue">Add Passenger</button>
+    <button mat-button (click)="redirectToDashboard()" style="margin-left: 2%; background-color: blanchedalmond">Back</button>
+  </div>
 </div>

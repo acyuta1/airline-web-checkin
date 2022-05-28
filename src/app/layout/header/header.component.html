@@ -2,9 +2,9 @@
   <a routerLink="/" class="navbar-brand"> MT Airline </a>
   <div class="flex-stretch"></div>
   <div class="header-options">
-    <a routerLink="/manage"  *ngIf="isAuthenticated && isAdmin">Manage</a>
+<!--    <a routerLink="/manage"  *ngIf="isAuthenticated && isAdmin">Manage</a>-->
     <a routerLink="/"  *ngIf="isAuthenticated">Flights</a>
-    <a routerLink="/passengers" *ngIf="isAuthenticated">Passengers</a>
+<!--    <a routerLink="/passengers" *ngIf="isAuthenticated">Passengers</a>-->
     <button mat-flat-button (click)="onLogout()" *ngIf="isAuthenticated">Logout</button>
   </div>
 </mat-toolbar>

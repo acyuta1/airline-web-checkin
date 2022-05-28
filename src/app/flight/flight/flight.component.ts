@@ -9,6 +9,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {PassengerService} from "../../passenger/passenger/passenger.service";
 import {FlightService} from "./flight.service";
 import { map, tap, take } from 'rxjs/operators';
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-flight',
@@ -27,6 +28,7 @@ export class FlightComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private flightService: FlightService,
+              private location: Location,
               private passengerService: PassengerService) {
   }
 
@@ -115,5 +117,9 @@ export class FlightComponent implements OnInit {
 
   toPassengers() {
     this.router.navigate(['passengers'])
+  }
+
+  redirectToDashboard() {
+    this.location.back();
   }
 }
